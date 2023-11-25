@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block title %} Blogly {% endblock %} {% block logo
+%} [ BLOGLY ] {% endblock %} {% block content %}
+<div class="container-fluid border-warning-subtle text-bg-warning-subtle p-1">
+  <h1 class="display-3 text-center">Welcome To Blogly!</h1>
+</div>
+<div class="container-fluid mt-2 d-flex justify-content-center">
+  <div class="container d-flex justify-content-center bg-dark p-2">
+    <a href="/"><button type="button" class="btn btn-outline-warning me-2">
+        Blogly Home
+      </button></a>
+    <a href="/users"><button type="button" class="btn btn-outline-warning me-2">
+        View All Users
+      </button></a>
+    </button>
+    <a href="/users/new"><button type="button" class="btn btn-outline-warning me-2">
+        Add New User
+      </button></a>
+  </div>
+</div>
+<div class="container-fluid mt-1 d-flex justify-content-center">
+  <div class="container d-flex bg-warning-subtle p-3 justify-content-center">
+    <form action="/users/{{user.id}}/edit" method="post">
+        <div class="mb-3">
+          <label for="first_name" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Please enter a first name" value="{{ user.first_name }}">
+        </div>
+        <div class="mb-3">
+          <label for="last_name" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Please enter a last name" value="{{ user.last_name }}">
+        </div>
+        <div class="mb-1">
+          <label for="image_url" class="form-label">Image Url</label>
+          <input type="text" class="form-control" id="image_url" name="image_url" placeholder="Provide an image of this user" aria-describedby="urlHelp" value="{{ user.image_url }}">
+        </div>
+        <div id="urlHelp" class="form-text mb-3">Please check to ensure all the fields are correctly filled.</div>
+        <button type="submit" class="btn btn-warning">Save Changes</button>
+      </form>
+
+  </div>
+</div>
+
+<div class="container-fluid mt-1 d-flex justify-content-center">
+  <div class="container d-flex bg-warning-subtle justify-content-center pt-2">
+    <p class="text-center">A Samie Smilz | Production</p>
+  </div>
+</div>
+
+{% endblock %}

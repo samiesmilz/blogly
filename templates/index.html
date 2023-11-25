@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block title %} Blogly {% endblock %} {% block logo
+%} [ BLOGLY ] {% endblock %} {% block content %}
+<div class="container-fluid border-warning-subtle text-bg-warning-subtle p-1">
+  <h1 class="display-3 text-center">Welcome To Blogly!</h1>
+</div>
+<div class="container-fluid mt-2 d-flex justify-content-center">
+  <div class="container d-flex justify-content-center bg-dark p-2">
+    <a href="/"><button type="button" class="btn btn-outline-warning me-2">
+        Blogly Home
+      </button></a>
+    <a href="/users"><button type="button" class="btn btn-outline-warning me-2">
+        View All Users
+      </button></a>
+    </button>
+    <a href="/users/new"><button type="button" class="btn btn-outline-warning me-2">
+        Add New User
+      </button></a>
+  </div>
+</div>
+<div class="container-fluid mt-1 d-flex justify-content-center">
+  <div class="container d-flex bg-warning-subtle p-5 justify-content-center">
+    <p>
+      "Embark on a journey of words and wonders as you step into the vibrant
+      world of Blogly—a realm where thoughts take flight and creativity knows no
+      bounds. Welcome to a space where stories unfold, ideas spark, and the
+      magic of expression comes to life. Join us in the art of storytelling,
+      where every post is a portal to inspiration. Welcome to Blogly, where
+      words find their home and imaginations run wild!"
+    </p>
+  </div>
+</div>
+<div class="container-fluid mt-1 d-flex justify-content-center">
+  <div class="container d-flex bg-warning-subtle p-1 justify-content-center">
+    <img
+      src="https://images.pexels.com/photos/267569/pexels-photo-267569.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+      class="img-fluid"
+      alt="Woman working on laptop"
+    />
+  </div>
+</div>
+
+<div class="container-fluid mt-1 d-flex justify-content-center">
+  <div class="container d-flex bg-warning-subtle justify-content-center pt-2">
+    <p class="text-center">A Samie Smilz | Production</p>
+  </div>
+</div>
+
+{% endblock %}
