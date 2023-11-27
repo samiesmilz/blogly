@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block title %} Blogly {% endblock %} {% block logo
+%} [ BLOGLY ] {% endblock %} {% block content %}
+<div class="container-fluid mt-1 d-flex justify-content-center">
+  <div class="container d-flex bg-warning-subtle justify-content-center pt-2">
+    <h4 class="text-center">Create new post</h4>
+  </div>
+</div>
+<div class="container-fluid mt-1 d-flex justify-content-center">
+  <div class="container d-flex bg-warning-subtle p-3 justify-content-center">
+    <form action="/users/{{user.id}}/posts/new" method="post">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          name="title"
+          placeholder="Please enter the post title"
+          value="{{ existing_value }}"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="content" class="form-label">Post Content</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="content"
+          name="content"
+          placeholder="Please enter your post content"
+          value="{{ existing_value }}"
+          rows="6"
+        >
+        </textarea>
+      </div>
+      <div id="urlHelp" class="form-text mb-3">
+        Please check to ensure your post ready for publishing..
+      </div>
+      <button type="submit" class="btn btn-info">Cancel</button>
+      <button type="submit" class="btn btn-success">Add</button>
+    </form>
+  </div>
+</div>
+
+<div class="container-fluid mt-1 d-flex justify-content-center">
+  <div class="container d-flex bg-warning-subtle justify-content-center pt-2">
+    <p class="text-center pt-1">A Samie Smilz | Production</p>
+  </div>
+</div>
+
+{% endblock %}

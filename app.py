@@ -2,7 +2,7 @@
 
 from flask import request
 from flask import Flask, redirect, flash, render_template, request, abort
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'devwoof0700'
@@ -87,5 +87,76 @@ def delete_user(user_id):
         db.session.delete(user)
         db.session.commit()
         return redirect("/users")
+    else:
+        abort(404)
+
+
+# Routes for posts
+
+@app.route("/posts")
+def get_posts():
+    """ Retrieve and show all posts in database """
+    posts = Post.query.all()
+    return render_template("posts.html", posts=posts)
+
+
+@app.route("/users/<int:user_id>/posts/new")
+def show_new_post_form(user_id):
+    """ Display form to create a new post for user"""
+    user = User.query.get(user_id)
+    return render_template("add_post.html", user=user)
+
+
+@app.route("/users/<int:user_id>/posts/new", methods=['POST'])
+def create_post(user_id):
+
+    title = request.form.get("title")
+    content = request.form.get("content")
+    post = Post(title=title, content=content, user_id=user_id)
+
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect(f"/users/{user_id}")
+
+
+@app.route("/posts/<int:post_id>")
+def show_post(post_id):
+    """ Display edit post form """
+    post = Post.query.get(post_id)
+    return render_template("post.html", post=post)
+
+
+@app.route("/posts/<int:post_id>/edit")
+def edit_post_form(post_id):
+    """ Display edit post form """
+    post = Post.query.get(post_id)
+    return render_template("edit_post.html", post=post)
+
+
+@app.route("/posts/<int:post_id>/edit", methods=['POST'])
+def update_post(post_id):
+    """ Edit post in database """
+
+    post = Post.query.get(post_id)
+    post.title = request.form.get("title")
+    post.content = request.form.get("content")
+
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect("/posts")
+
+
+@app.route("/posts/<int:post_id>/delete", methods=['POST'])
+def delete_post(post_id):
+    """ Delete user post"""
+
+    post = Post.query.get(post_id)
+
+    if post:
+        db.session.delete(post)
+        db.session.commit()
+        return redirect("/posts")
     else:
         abort(404)

@@ -1,58 +1,78 @@
 {% extends 'base.html' %} {% block title %} Blogly {% endblock %} {% block logo
 %} [ BLOGLY ] {% endblock %} {% block content %}
-<div class="container-fluid border-warning-subtle text-bg-warning-subtle p-1">
-  <h1 class="display-3 text-center">Welcome To Blogly!</h1>
-</div>
-<div class="container-fluid mt-2 d-flex justify-content-center">
-  <div class="container d-flex justify-content-center bg-dark p-2">
-    <a href="/"><button type="button" class="btn btn-outline-warning me-2">
-        Blogly Home
-      </button></a>
-    <a href="/users"><button type="button" class="btn btn-outline-warning me-2">
-        View All Users
-      </button></a>
-    </button>
-    <a href="/users/new"><button type="button" class="btn btn-outline-warning me-2">
-        Add New User
-      </button></a>
+
+<div class="container-fluid mt-1 d-flex justify-content-center">
+  <div class="container d-flex justify-content-center pt-2">
+    <h3>{{user.first_name}}'s Profile</h3>
   </div>
 </div>
 
 <div class="container-fluid mt-1 d-flex justify-content-center">
-  <div class="container d-flex bg-warning-subtle justify-content-center pt-2">
-     <h3>{{user.first_name}}'s Profile</h3>
-  </div>
-</div>
-
-<div class="container-fluid mt-1 d-flex justify-content-center">
-  <div class="container d-flex bg-dark p-5 justify-content-center">
-   
-      <div class="card mb-3" style="max-width: 540px;">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img src="{{user.image_url}}" class="img-fluid rounded-start" alt="profile image">
+  <div class="container d-flex bg-warning-subtle p-5 justify-content-center">
+    <div class="card mb-3" style="max-width: 540px">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            src="{{user.image_url}}"
+            class="img-fluid rounded-start"
+            alt="profile image"
+          />
+        </div>
+        <div class="col-md-4">
+          <div class="card-body">
+            <h3 class="card-title">
+              <a href="/users/{{user.id}}">Meet {{user.first_name}}.</a>
+            </h3>
+            <span class="card-text d-block"
+              ><strong>First Name: </strong>{{user.first_name}}</span
+            >
+            <span class="card-text"
+              ><strong>Last Name: </strong> {{user.last_name}}</span
+            >
+            <p class="card-text">
+              <small class="text-body-secondary">Joined: 3 mins ago</small>
+            </p>
           </div>
-          <div class="col-md-4">
-            <div class="card-body">
-              <h3 class="card-title"><a href="/users/{{user.id}}">Meet {{user.first_name}}.</a></h3>
-              <span class="card-text d-block "><strong>First Name: </strong>{{user.first_name}}</span>
-              <span class="card-text "><strong>Last Name: </strong> {{user.last_name}}</span>
-              <p class="card-text"><small class="text-body-secondary">Joined: 3 mins ago</small></p>
-            </div>
-          </div>
-          <div class="btn-group col-l-4">
-                <a href="#" class="btn btn-primary active me-1" aria-current="page">Edit</a>
-                <a href="/users/{{user.id}}/delete" class="btn btn-danger">Delete</a>
-            </div>
+        </div>
+        <div class="btn-group col-l-4">
+          <a
+            href="/users/{{user.id}}/edit"
+            class="btn btn-primary active me-1"
+            aria-current="page"
+            >Edit</a
+          >
+          <a href="/users/{{user.id}}/delete" class="btn btn-danger">Delete</a>
         </div>
       </div>
-
+    </div>
   </div>
 </div>
-
 <div class="container-fluid mt-1 d-flex justify-content-center">
-  <div class="container d-flex bg-warning-subtle justify-content-center pt-2">
-    <p class="text-center">A Samie Smilz | Production</p>
+  <div class="container d-flex bg-dark pt-2">
+    <h4 class="text-bg-dark">Posts:</h4>
+  </div>
+</div>
+<div class="container-fluid mt-1 d-flex justify-content-center">
+  <div class="container d-flex pt-2">
+    {% if user.posts %}
+    <ul class="list-group">
+      {% for post in user.posts %}
+      <li class="list-group-item">
+        <a class="" href="/posts/{{post.id}}">{{post.title}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+    <p class="text-dark-emphasis pt-1">{{user.first_name}} has no posts yet.</p>
+    {% endif %}
+  </div>
+</div>
+<div class="container-fluid d-flex justify-content-center">
+  <div class="container d-flex pt-2">
+    <a href="/users/{{user.id}}/posts/new">
+      <button type="button" class="btn btn-primary">Add Post</button></a
+    >
   </div>
 </div>
 
