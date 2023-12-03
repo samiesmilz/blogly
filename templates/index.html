@@ -13,19 +13,34 @@
     </p>
   </div>
 </div>
-<div class="container-fluid mt-1 d-flex justify-content-center">
-  <div class="container d-flex bg-warning-subtle p-1 justify-content-center">
-    <img
-      src="https://images.pexels.com/photos/267569/pexels-photo-267569.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-      class="img-fluid"
-      alt="Woman working on laptop"
-    />
-  </div>
-</div>
 
-<div class="container-fluid mt-1 d-flex justify-content-center">
-  <div class="container d-flex bg-warning-subtle justify-content-center pt-2">
-    <p class="text-center">A Samie Smilz | Production</p>
+{% if posts %}
+<div class="container mt-3">
+  {% for post in posts %}
+  <div class="card mb-3 bg-dark text-bg-dark">
+    <div class="card-body">
+      <h5 class="card-title text-warning">
+        <a class="text-warning" href="/posts/{{post.id}}">{{post.title}}</a>
+      </h5>
+      <p class="card-text">{{post.content}}</p>
+      <p class="card-text">
+        <small class="text-info">
+          Tags: {% for tag in post.tags %} |
+          <a class="text-info" href="tags/{{tag.id}}">{{tag.name}}</a> {% endfor
+          %}
+        </small>
+        <br />
+        <small class="">Last updated 3 mins ago. </small>
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="container-fluid mt-1">
+  <div class="container bg-warning-subtle pt-2 text-center">
+    <p class="pb-2">A Samie Smilz | Production</p>
   </div>
 </div>
 

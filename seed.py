@@ -1,10 +1,11 @@
 """ Seed file to make ssample data for the database. """
 
 from app import app
-from models import db, User, Post
+from models import db, User, Post, PostTag, Tag
 
 # Create all tables
-db.drop_all()
+
+db.engine.execute('DROP SCHEMA public CASCADE; CREATE SCHEMA public;')
 db.create_all()
 
 # Sample data for users
@@ -73,4 +74,51 @@ post3 = Post(
 
 # Add all sample posts in the database tables.
 db.session.add_all([post1, post2, post3])
+db.session.commit()
+
+
+# Sample data for more tags
+python_tag = Tag(name="Python")
+web_dev_tag = Tag(name="Web Development")
+database_tag = Tag(name="Database")
+flask_tag = Tag(name="Flask")
+bootstrap_tag = Tag(name="Bootstrap")
+
+# Add more sample tags to the database
+db.session.add_all(
+    [python_tag, web_dev_tag, database_tag, flask_tag, bootstrap_tag])
+db.session.commit()
+
+# Sample data for more posts
+post4 = Post(
+    title="Mastering Python Basics",
+    content="Build a strong foundation in Python programming by mastering the basics. From variables and data types to control flow and functions, this comprehensive guide will help you become proficient in Python.",
+    user_id=6
+)
+
+post5 = Post(
+    title="The Power of Web Development",
+    content="Explore the dynamic world of web development and discover how it shapes the digital landscape. From front-end frameworks like Bootstrap to back-end technologies, this journey will unveil the potential of web development.",
+    user_id=5
+)
+
+post6 = Post(
+    title="Diving Into Databases with SQL",
+    content="Unlock the secrets of SQL and databases. Learn how to design, query, and optimize databases to store and retrieve data efficiently. Whether you're a beginner or an experienced developer, this guide has something for everyone.",
+    user_id=2
+)
+
+# Add more sample posts to the database
+db.session.add_all([post4, post5, post6])
+db.session.commit()
+
+# Create associations between posts and tags
+post1.tags.extend([python_tag, web_dev_tag])
+post2.tags.extend([database_tag, python_tag])
+post3.tags.append(flask_tag)
+post4.tags.append(python_tag)
+post5.tags.extend([web_dev_tag, bootstrap_tag])
+post6.tags.extend([database_tag, python_tag])
+
+# Commit the changes
 db.session.commit()

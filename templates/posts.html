@@ -11,6 +11,11 @@
           <div class="card-header bg-dark text-white">{{ post.title }}</div>
           <div class="card-body">
             <p class="card-text">{{ post.content }}</p>
+            <p class="bg-info-subtle p-1 rounded">
+              <strong class="ps-1">Tags:</strong> {% for tag in post.tags %} |
+              <a class="text-dark" href="tags/{{tag.id}}">{{tag.name}}</a>
+              {% endfor %}
+            </p>
             <div class="btn-group">
               <a
                 href="/posts/{{ post.id }}/edit"
@@ -44,7 +49,7 @@
 
 <div class="container-fluid mt-1">
   <div class="container bg-warning-subtle pt-2 text-center">
-    <p>A Samie Smilz | Production</p>
+    <p class="pb-2">A Samie Smilz | Production</p>
   </div>
 </div>
 

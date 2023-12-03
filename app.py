@@ -16,7 +16,8 @@ connect_db(app)
 @app.route("/")
 def home():
     """ Got to homepage """
-    return render_template("index.html")
+    posts = Post.query.all()
+    return render_template("index.html", posts=posts)
 
 
 @app.route("/users")
