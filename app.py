@@ -139,15 +139,11 @@ def edit_post(post_id):
         # Update post details
         post.title = request.form.get("title")
         post.content = request.form.get("content")
+        post.created_at = datetime.utcnow()
 
         # Get the list of tag IDs from the form
         selected_tag_ids = list(map(int, request.form.getlist('tags')))
-
-        # Clear existing tags
-        post.tags.clear()
-
-        # Add selected tags
-        post.tags.extend(Tag.query.filter(Tag.id.in_(selected_tag_ids)))
+        post.tags = Tag.query.filter(Tag.id.in_(selected_tag_ids)).all()
 
         # Commit changes to the database
         db.session.commit()

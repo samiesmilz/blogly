@@ -30,7 +30,19 @@
           %}
         </small>
         <br />
-        <small class="">Last updated - {{post.last_updated()}} </small>
+        <small class=""
+          >By:
+          <span class="ps-2 me-2"
+            ><a
+              class="text-info text-decoration-none"
+              href="/users/{{post.user_id}}"
+              >{{post.user.get_full_name()}}</a
+            ></span
+          >|
+          <span class="text-secondary ps-2"
+            >Last updated - {{post.last_updated()}}</span
+          >
+        </small>
       </p>
     </div>
   </div>

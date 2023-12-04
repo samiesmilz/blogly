@@ -34,6 +34,9 @@ class User(db.Model):
         self.last_name = last_name
         self.image_url = image_url
 
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
 
 class Post(db.Model):
     __tablename__ = "posts"

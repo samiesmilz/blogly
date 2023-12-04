@@ -7,8 +7,15 @@
       {% if post %}
       <div class="col-md-12 mb-3">
         <!-- Adjust the column size as per your design -->
-        <div class="card text-dark" style="max-width: 36rem">
-          <div class="card-header bg-dark text-white">{{ post.title }}</div>
+        <div class="card text-dark">
+          <div class="card-header bg-dark text-white">{{ post.title }} 
+                <span class="ms-2"
+                >| By <a
+                  class="text-info text-decoration-none"
+                  href="/users/{{post.user_id}}"
+                  >{{post.user.get_full_name()}}</a
+                >
+          </div>
           <div class="card-body">
             <p class="card-text">{{ post.content }}</p>
             <p class="p-1 rounded">
@@ -22,17 +29,23 @@
               >
               {% endfor %}
             </p>
-            <div class="btn-group">
-              <a
-                href="/posts/{{ post.id }}/edit"
-                class="btn btn-primary me-1"
-                aria-current="page"
-                >Edit</a
+            <small class="align-content-center">
+          </span>|
+              <span class="text-secondary"
+                >Last updated - {{post.last_updated()}}</span
               >
-              <a href="/posts/{{ post.id }}/delete" class="btn btn-danger"
-                >Delete</a
-              >
-            </div>
+            </small>
+          </div>
+          <div class="btn-group p-2" style="width: 12rem">
+            <a
+              href="/posts/{{ post.id }}/edit"
+              class="btn btn-primary me-1"
+              aria-current="page"
+              >Edit</a
+            >
+            <a href="/posts/{{ post.id }}/delete" class="btn btn-danger"
+              >Delete</a
+            >
           </div>
         </div>
       </div>
