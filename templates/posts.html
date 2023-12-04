@@ -1,5 +1,21 @@
 {% extends 'base.html' %} {% block title %} Blogly {% endblock %} {% block logo
-%} [ BLOGLY ] {% endblock %} {% block content %}
+%} [ BLOGLY ] {% endblock %} 
+{% block nav %}
+    <div class="container-fluid mt-2 d-flex justify-content-center">
+      <div class="container d-flex justify-content-center p-2">
+        
+        <a href="/tags"><button type="button" class="btn btn-outline-warning me-2">
+            All Tags
+          </button></a>
+        </button>
+        <a href="/tags/new"><button type="button" class="btn btn-outline-warning me-2">
+            + New Tag
+          </button></a>
+          
+      </div>
+    </div>
+{% endblock %}
+{% block content %}
 
 <div class="container-fluid mt-1">
   <div class="container bg-warning-subtle p-5">

@@ -52,6 +52,15 @@ class Post(db.Model):
     def __repr__(self):
         return f"< Post Id: {self.id} Post-Title: {self.title} Created-At: {self.created_at} >"
 
+    def last_updated(post):
+        """Format datetime to be user friendly"""
+        dt_object = post.created_at
+
+        # Format the datetime object as a string with a desired format
+        formatted_time = dt_object.strftime("%B %d, %Y %I:%M %p")
+
+        return formatted_time
+
 
 class Tag(db.Model):
     __tablename__ = 'tags'

@@ -2,7 +2,8 @@
 
 from flask import request
 from flask import Flask, redirect, flash, render_template, request, abort
-from models import db, connect_db, User, Post
+from models import db, connect_db, User, Post, Tag, PostTag
+from datetime import datetime
 
 app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = 'devwoof0700'
@@ -128,25 +129,36 @@ def show_post(post_id):
     return render_template("post.html", post=post)
 
 
-@app.route("/posts/<int:post_id>/edit")
-def edit_post_form(post_id):
-    """ Display edit post form """
+@app.route("/posts/<int:post_id>/edit", methods=['GET', 'POST'])
+def edit_post(post_id):
+    """ View and update a post"""
+    # Fetch the post
     post = Post.query.get(post_id)
-    return render_template("edit_post.html", post=post)
 
+    if request.method == 'POST':
+        # Update post details
+        post.title = request.form.get("title")
+        post.content = request.form.get("content")
 
-@app.route("/posts/<int:post_id>/edit", methods=['POST'])
-def update_post(post_id):
-    """ Edit post in database """
+        # Get the list of tag IDs from the form
+        selected_tag_ids = list(map(int, request.form.getlist('tags')))
 
-    post = Post.query.get(post_id)
-    post.title = request.form.get("title")
-    post.content = request.form.get("content")
+        # Clear existing tags
+        post.tags.clear()
 
-    db.session.add(post)
-    db.session.commit()
+        # Add selected tags
+        post.tags.extend(Tag.query.filter(Tag.id.in_(selected_tag_ids)))
 
-    return redirect("/posts")
+        # Commit changes to the database
+        db.session.commit()
+
+        # Redirect to the post details page
+        return redirect(f"/posts/{post.id}")
+
+    # Fetch all tags for rendering the form
+    tags = Tag.query.all()
+
+    return render_template("edit_post.html", post=post, tags=tags)
 
 
 @app.route("/posts/<int:post_id>/delete", methods=['POST'])
@@ -161,3 +173,71 @@ def delete_post(post_id):
         return redirect("/posts")
     else:
         abort(404)
+
+
+# Routes for tags
+
+@app.route("/tags")
+def show_all_tags():
+    """Display all available tags"""
+    tags = Tag.query.all()
+    return render_template("tags.html", tags=tags)
+
+
+@app.route("/tags/<int:id>")
+def show_tag(id):
+    """ Show individual tag """
+    tag = Tag.query.get(id)
+    return render_template("tag.html", tag=tag)
+
+
+@app.route("/tags/<int:id>/edit", methods=['GET', 'POST'])
+def edit_tag(id):
+    """ Edit tag """
+    tag = Tag.query.get(id)
+
+    if request.method == 'POST':
+        tag_name = request.form.get("tag_name")
+
+        if tag_name:
+            tag.name = tag_name
+
+            # Get the list of post IDs from the form
+            selected_post_ids = list(map(int, request.form.getlist('posts')))
+
+            # Update tag associations with posts
+            tag.posts = [
+                post for post in tag.posts if post.id in selected_post_ids]
+
+            db.session.add(tag)
+            db.session.commit()
+
+            return redirect(f"/tags/{id}")
+
+    return render_template("edit_tag.html", tag=tag)
+
+
+@app.route("/tags/<int:id>/delete")
+def delete_tag(id):
+    """ Delete tag """
+    tag = Tag.query.get(id)
+    db.session.delete(tag)
+    db.session.commit()
+    return redirect("/tags")
+
+
+@app.route("/tags/new", methods=['GET', 'POST'])
+def add_tag():
+    """ Add a new tag """
+    tags = Tag.query.all()
+    if request.method == 'POST':
+        tag = request.form.get("tag_name")
+        if tag:
+            new_tag = Tag(name=tag)
+            db.session.add(new_tag)
+            db.session.commit()
+            return redirect("/tags/new")
+        else:
+            return redirect("/tags/new")
+
+    return render_template("add_tag.html", tags=tags)

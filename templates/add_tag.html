@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block title %} Blogly {% endblock %} {% block logo
+%} [ BLOGLY ] {% endblock %} {% block content %}
+
+<div class="container bg-warning-subtle pb-4">
+  <div class="container p-3">
+    <h2 class="d-inline">
+      Tags
+      <span
+        ><a href="/tags"
+          ><button class="btn btn-sm btn-warning">See All Tags</button></a
+        ></span
+      >
+    </h2>
+  </div>
+  {% if tags %}
+
+  <ul>
+    {% for tag in tags %}
+    <li><a href="/tags/{{tag.id}}">{{tag.name}}</a></li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="p-3 ps-1">No tags available yet</p>
+  {% endif %}
+</div>
+
+<div class="container bg-warning-subtle p-3 mt-1">
+  <form action="/tags/new" , method="post">
+    <label class="form-label" for="tag_name">Tag Name:</label>
+    <div class="mb-3 input-group">
+      <span class="input-group-text" id="tag_name_icon">#</span>
+      <input
+        type="text"
+        class="form-control"
+        id="tag_name"
+        name="tag_name"
+        placeholder="Enter a name for the tag..."
+        aria-describedby="tagName"
+      />
+      <button class="btn btn-warning">Add tag</button>
+      <div class="form-text d-inline ps-4 pe-5 pt-2" id="basic-addon4">
+        Tag name should be less than 100 characters.
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

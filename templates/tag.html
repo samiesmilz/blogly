@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block title %} Blogly {% endblock %} {% block logo
+%} [ BLOGLY ] {% endblock %} {% block content %}
+
+<div class="container bg-warning-subtle p-4 align-content-center">
+  <div class="card border-secondary m-3 mx-auto" style="max-width: 30rem">
+    <div class="card-header">
+      <span class="bg-dark text-light p-1 ps-2 pe-2 rounded"> Tag:</span>
+      {{tag.name}}
+      <a
+        href="/tags/{{tag.id}}/edit"
+        class="btn btn-sm btn-warning"
+        aria-current="page"
+        >Edit Tag</a
+      >
+      <a href="/tags/{{tag.id}}/delete" class="btn btn-sm btn-danger">Delete</a>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title pt-1">Tag posts:</h5>
+      {% if tag.posts %}
+      <ul>
+        {% for post in tag.posts %}
+        <li class=""><a href="/posts/{{post.id}}">{{post.title}}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <small>
+        <p class="card-text rounded bg-dark text-light p-1 ps-2">
+          You may edit or delete this tag. |
+          <a class="text-warning" href="/tags"> see all tags</a>
+        </p></small
+      >
+    </div>
+  </div>
+
+  {% endblock %}
+</div>

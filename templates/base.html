@@ -21,29 +21,37 @@
       {% endfor %}
     </section>
     {% endif %} {% endwith %}
-    <div class="container-fluid border-warning-subtle text-bg-warning-subtle p-1">
+    <div
+      class="container-fluid border-warning-subtle text-bg-warning-subtle p-1"
+    >
       <h1 class="display-3 text-center">Welcome To Blogly!</h1>
     </div>
+
     <div class="container-fluid mt-2 d-flex justify-content-center">
       <div class="container d-flex justify-content-center bg-dark p-2">
-        <a href="/"><button type="button" class="btn btn-outline-warning me-2">
+        <a href="/"
+          ><button type="button" class="btn btn-outline-warning me-2">
             Home
-          </button></a>
-        <a href="/users"><button type="button" class="btn btn-outline-warning me-2">
+          </button></a
+        >
+        <a href="/users"
+          ><button type="button" class="btn btn-outline-warning me-2">
             All Users
-          </button></a>
-        </button>
-        <a href="/users/new"><button type="button" class="btn btn-outline-warning me-2">
+          </button></a
+        >
+        <a href="/users/new"
+          ><button type="button" class="btn btn-outline-warning me-2">
             + New User
-          </button></a>
-          <a href="/posts"><button type="button" class="btn btn-outline-warning me-2">
+          </button></a
+        >
+        <a href="/posts"
+          ><button type="button" class="btn btn-outline-warning me-2">
             All Posts
-          </button></a>
+          </button></a
+        >
       </div>
     </div>
-        
-    
-    {% block content %} {% endblock %}
-    
+    {% if 'nav' is defined %} {% block nav %} {% endblock %} {% endif %} {%
+    block content %} {% endblock %}
   </body>
 </html>

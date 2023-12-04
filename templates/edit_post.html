@@ -37,8 +37,45 @@
           Please check to ensure your post is ready for publishing.</span
         >
       </div>
+      {% if tags %}
+      <div class="p-2">
+        <strong
+          ><p class="">
+            Checked tags will be associated with the post.
+          </p></strong
+        >
+
+        <!-- Display all tags -->
+        {% for tag in tags %}
+
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            name="tags"
+            value="{{tag.id}}"
+            id="{{tag.id}}"
+            {%
+            if
+            tag
+            in
+            post.tags
+            %}checked{%
+            endif
+            %}
+          />
+          <label class="form-check-label text-primary" for="{{tag.id}}">
+            {{tag.name}}
+          </label>
+        </div>
+
+        {% endfor %}
+      </div>
+      {% endif %}
       <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-info me-2">Cancel</button>
+        <a class="text-decoration-none" href="/posts/{{post.id}}"
+          ><button type="button" class="btn btn-info me-2">Cancel</button></a
+        >
         <button type="submit" class="btn btn-success">Save</button>
       </div>
     </form>

@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% block title %} Blogly {% endblock %} {% block logo
+%} [ BLOGLY ] {% endblock %} {% block content %}
+
+<div class="container bg-warning-subtle p-4 align-content-center">
+  <div class="card border-secondary m-3 mx-auto" style="max-width: 36rem">
+    <div class="card-header">
+      <span class="bg-dark text-light p-1 ps-2 pe-2 rounded"> Tag:</span>
+      {{tag.name}}
+      <div class="ps-2 d-inline">
+        <a href="/tags" class="btn btn-sm btn-warning" aria-current="page"
+          >See all tags</a
+        >
+        <a href="/tags/{{tag.id}}/delete" class="btn btn-sm btn-danger"
+          >Delete</a
+        >
+      </div>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title pt-1">Update or delete this tag:</h5>
+      <form action="/tags/{{tag.id}}/edit" method="post">
+        <div class="p-2">
+          <label for="tag_name" class="form-label">Tag name:</label>
+          <div class="mb-3 input-group">
+            <span class="input-group-text" id="tag_name_icon">#</span>
+            <input
+              type="text"
+              class="form-control"
+              id="tag_name"
+              name="tag_name"
+              placeholder="Enter a name for the tag..."
+              value="{{tag.name}}"
+              aria-describedby="tagName"
+            />
+            <button class="btn btn-warning">Update Tag</button>
+            <div class="form-text d-inline ps-4 pe-5 pt-2" id="basic-addon4">
+              Tag name should be less than 100 characters.
+            </div>
+          </div>
+        </div>
+        {% if tag.posts %}
+        <div class="p-2">
+          <strong><p class="">Un-check to remove tag from post.</p></strong>
+
+          {% for post in tag.posts %}
+
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="posts"
+              value="{{post.id}}"
+              id="{{post.id}}"
+              checked="True"
+            />
+            <label class="form-check-label" for="{{post.id}}">
+              <a href="/posts/{{post.id}}">{{post.title}}</a>
+            </label>
+          </div>
+
+          {% endfor %}
+        </div>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container bg-warning-subtle mt-1"></div>
+{% endblock %}

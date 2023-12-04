@@ -7,10 +7,21 @@
       {% if post %}
       <div class="col-md-12 mb-3">
         <!-- Adjust the column size as per your design -->
-        <div class="card text-dark">
+        <div class="card text-dark" style="max-width: 36rem">
           <div class="card-header bg-dark text-white">{{ post.title }}</div>
           <div class="card-body">
             <p class="card-text">{{ post.content }}</p>
+            <p class="p-1 rounded">
+              <strong class="ps-1">Tags:</strong> {% for tag in post.tags %}
+              <small>
+                <a
+                  class="bg-primary rounded p-1 text-light fst-italic text-decoration-none"
+                  href="/tags/{{tag.id}}"
+                  >{{tag.name}}</a
+                ></small
+              >
+              {% endfor %}
+            </p>
             <div class="btn-group">
               <a
                 href="/posts/{{ post.id }}/edit"
